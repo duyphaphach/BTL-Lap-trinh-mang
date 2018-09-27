@@ -22,47 +22,57 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import login.LoginView;
+import model.MessageContent;
 
 /**
  *
  * @author Admin
  */
 public class ServerControl {
-   
+
+    /*
+    threadSocket : Thread  giao tiếp giữu client và server
+    updateTimeServer : Thread cập nhật thời gian hiển thị của server
+    messageContent :
+    listUser : danh sách user đang online
+     */
     private ServerView serverView;
     private ThreadSocket threadSocket;
     private UpdateTimeServer updateTimeServer;
     private ServerSocket serverSocket;
-    
     private Socket socket;
     private int port = 1997;
-    // bỏ qua
-    private ArrayList<String> listUser ;
+    private MessageContent messageContent;
+    private ArrayList<String> listUser;
 
     public ServerControl(ServerView view) {
+        messageContent = new MessageContent();
         listUser = new ArrayList<>();
         this.serverView = view;
-         this.serverView.setVisible(true);
+        this.serverView.setVisible(true);
         openServer(this.port);
-         this.serverView.addbtnExitActionListener(new ActionListener() {
+        // thêm sự kiện cho btnExit của ServerView
+        this.serverView.addbtnExitActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 System.exit(0);
             }
         });
-         updateTimeServer = new UpdateTimeServer(this.serverView);
-         updateTimeServer.start();
-        while(true){
-            
+        //cập nhật thời gian server,Để hiển thị lên serverView
+        updateTimeServer = new UpdateTimeServer(this.serverView);
+        updateTimeServer.start();
+        // server lắng nghe gói tin client gửi tới
+        while (true) {
             listening();
         }
-        
+
     }
 
+    //
     public void openServer(int port) {
         try {
             serverSocket = new ServerSocket(port);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,20 +80,16 @@ public class ServerControl {
 
     public void listening() {
         try {
-            // luồng được tạo cho mỗi Client 
-            threadSocket = new ThreadSocket(serverSocket.accept(),this.serverView,listUser);
+            // luồng để xử lý khi có client gửi gói tin đến server 
+            threadSocket = new ThreadSocket(serverSocket.accept(), this.serverView, listUser);
             threadSocket.start();
-            
-        
+
         } catch (IOException ex) {
             Logger.getLogger(ServerControl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            
+
         }
-        
-        
+
     }
 
-    
-   
 }

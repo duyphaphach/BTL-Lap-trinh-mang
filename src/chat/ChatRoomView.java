@@ -11,12 +11,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.AncestorListener;
 import model.MessageContent;
 
 /**
@@ -24,14 +27,17 @@ import model.MessageContent;
  * @author Admin
  */
 public class ChatRoomView extends javax.swing.JFrame {
-   private String nickname = "";
-   
+   private String nickname;
+   private ArrayList<String> listUser ;
+   private MessageContent content;
     /**
      * Creates new form ChatRoomView
      */
     
     public ChatRoomView(){
-        
+        this.nickname = "";
+        this.listUser = new ArrayList<>();
+        content = new MessageContent();
         initComponents();
         
     }
@@ -54,7 +60,7 @@ public class ChatRoomView extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         txtSendContent = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tableListUserOnline = new javax.swing.JTable();
 
         lblTemp.setText("jLabel1");
 
@@ -86,18 +92,15 @@ public class ChatRoomView extends javax.swing.JFrame {
         txtSendContent.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jScrollPane4.setViewportView(txtSendContent);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tableListUserOnline.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "DS online"
             }
         ));
-        jScrollPane5.setViewportView(jTable2);
+        jScrollPane5.setViewportView(tableListUserOnline);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -181,13 +184,18 @@ public class ChatRoomView extends javax.swing.JFrame {
     // event btnExit
     public void addBtnExitActionListener(ActionListener ac){
         btnExit.addActionListener(ac);
+        
     }
+    
+    //event tableListUserOnline
+    
    // đóng gói Object MessageContent
     public MessageContent getMessageContent(){
         String nickName =this.nickname;
         String message = txtSendContent.getText();
+        content.setNickName(nickName);
+        content.setMessage(message);
         
-        MessageContent content = new MessageContent(nickName,message);
         
         return content;
     }
@@ -212,6 +220,15 @@ public class ChatRoomView extends javax.swing.JFrame {
     public JLabel getLblTime() {
         return lblTime;
     }
+
+    public ArrayList<String> getListUser() {
+        return listUser;
+    }
+
+    public JTable getTableListUserOnline() {
+        return tableListUserOnline;
+    }
+    
     
 
     
@@ -224,10 +241,10 @@ public class ChatRoomView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblNickName;
     private javax.swing.JLabel lblTemp;
     private javax.swing.JLabel lblTime;
+    private javax.swing.JTable tableListUserOnline;
     private javax.swing.JTextArea txtAreaAllContent;
     private javax.swing.JTextField txtSendContent;
     // End of variables declaration//GEN-END:variables

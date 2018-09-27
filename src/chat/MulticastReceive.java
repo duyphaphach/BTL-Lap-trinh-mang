@@ -18,7 +18,8 @@ import model.MessageContent;
 
 /**
  *
- * @author Admin
+ * luồng để nhận gói tin multicast
+ * đọc bài giảng lâp trình mạng để rõ hơn
  */
 public class MulticastReceive extends Thread {
     private ChatRoomView view;
@@ -34,7 +35,11 @@ public class MulticastReceive extends Thread {
         try {
             
             socket = new MulticastSocket(this.port);
-            socket.joinGroup(InetAddress.getByName(this.host));
+            InetAddress address = InetAddress.getByName(this.host);
+           
+            socket.joinGroup(address);
+            
+           
         } catch (IOException ex) {
             Logger.getLogger(MulticastReceive.class.getName()).log(Level.SEVERE, null, ex);
         }

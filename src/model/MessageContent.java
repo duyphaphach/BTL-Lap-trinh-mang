@@ -6,18 +6,49 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
- *
- * @author Admin
+ * MessageContent : nội dung tin nhắn khi client gửi cho nhau
+ *  
  */
 public class MessageContent implements Serializable{
+    /*
+    nickName : tên client
+    message : nội dung của tin chat
+    timeMessage : thời gian của tin chat
+    statusAlive : trạng thái của user (online or offline)
+    listUser : danh sách user online
+
+    */
     private String nickName;
     private String message;
     private String timeMessage;
+    private boolean statusAlive;
+    private ArrayList<String> listUser = new ArrayList<>();
 
     public MessageContent(){
-        
+        this.nickName = "";
+        this.message = "";
+        this.timeMessage = "";
+        statusAlive = false;
+        listUser = new ArrayList<>();
+    }
+
+    public boolean isStatusAlive() {
+        return statusAlive;
+    }
+
+    public void setStatusAlive(boolean statusAlive) {
+        this.statusAlive = statusAlive;
+    }
+
+    public ArrayList<String> getListUser() {
+        return listUser;
+    }
+
+    public void setListUser(ArrayList<String> listUser) {
+        this.listUser = listUser;
     }
 
     public MessageContent(String nickName, String message) {

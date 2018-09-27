@@ -19,14 +19,15 @@ import model.MessageContent;
 
 /**
  *
- * @author Admin
+ * luồng để gửi gói tin multicast
+ * đọc bài giảng lập trình mạng để biết rõ hơn
  */
-public class MulticastSend {
+public class MulticastSend extends  Thread{
 
     private String host = "234.5.6.8";
     private int port = 6666;
     private MulticastSocket socket;
-
+    private MessageContent messageContent;
     
 
     public String getHost() {
@@ -46,15 +47,21 @@ public class MulticastSend {
     }
 
     public MulticastSend(MessageContent obj) {
+        this.messageContent = obj;
         
+
+    }
+
+    @Override
+    public void run() {
         InetAddress inetAdress = null;
         try {
             socket = new MulticastSocket();
             inetAdress = InetAddress.getByName(this.host);
-            if (obj instanceof MessageContent) {
+            if (messageContent instanceof MessageContent) {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
-                oos.writeObject(obj);
+                oos.writeObject(messageContent);
                 oos.flush();
                 byte[] sendData = baos.toByteArray();
                 DatagramPacket datagramPacketSend = new DatagramPacket(sendData, sendData.length, inetAdress, this.port);
@@ -67,8 +74,12 @@ public class MulticastSend {
             Logger.getLogger(MulticastSend.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(MulticastSend.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            if (socket != null)
+                socket.close();
         }
-
+        
     }
+    
 
 }

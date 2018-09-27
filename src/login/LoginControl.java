@@ -27,15 +27,19 @@ import javax.swing.JOptionPane;
  */
 public class LoginControl {
 
+    /*
+    differenceBetweenEpochs : biến dùng cho đồng bộ thời gian server
+    */
     private LoginView clientView;
     private int port = 1997;
     private String host = "localhost";
     private Socket clientSocket;
-    // biến dùng cho đồng bộ thời gian server
     private long differenceBetweenEpochs = 2208988800L;
+    
     public LoginControl(LoginView view) {
         this.clientView = view;
         this.clientView.setVisible(true);
+        // thêm sự kiện cho button Login
         clientView.addLoginListener(new LoginListener());
 
     }
@@ -60,13 +64,14 @@ public class LoginControl {
                 if (SyncTime instanceof String) {
                     String receive = (String) SyncTime;
                     System.out.println(receive);
-                    if (receive.contains("ICT 1900")){
+                    if (receive.contains("Mon Jan 01 06:59:59 ICT 1900")){
                         clientView.showMessenge("tài khoản đã tồn tại");
+                } else if(receive.contains("Sun Jul 15 05:18:53 ICT 1900")){
+                    clientView.showMessenge("tài khoản hoặc mật khẩu không đúng");
                 }
                     else {
-                        
+                        // chuyển sang màn hình chatRoom
                         clientView.dispose();
-
                         new ChatRoomControl(user.getUsername(),date);
 
                     } 
@@ -97,9 +102,9 @@ public class LoginControl {
         }
 
     }
+    
+    // đọc gói tin nhân từ server để trả về thời gian
     private Date SyncTime(InputStream inputStream){
-       
-        
        try {
            //
            
