@@ -1,0 +1,234 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package chat;
+
+import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import model.MessageContent;
+
+/**
+ *
+ * @author Admin
+ */
+public class ChatRoomView extends javax.swing.JFrame {
+   private String nickname = "";
+   
+    /**
+     * Creates new form ChatRoomView
+     */
+    
+    public ChatRoomView(){
+        
+        initComponents();
+        
+    }
+    
+   
+   
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lblTemp = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        btnExit = new javax.swing.JButton();
+        btnSend = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaAllContent = new javax.swing.JTextArea();
+        lblTime = new javax.swing.JLabel();
+        lblNickName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtSendContent = new javax.swing.JTextField();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+
+        lblTemp.setText("jLabel1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 255, 204));
+
+        btnExit.setText("exit");
+
+        btnSend.setIcon(new javax.swing.ImageIcon("E:\\LAP_TRINH_MANG\\SOURCE CODE\\LTM_BAI TAP LON\\images\\icon_send_messanger.png")); // NOI18N
+
+        txtAreaAllContent.setEditable(false);
+        txtAreaAllContent.setBackground(new java.awt.Color(220, 220, 251));
+        txtAreaAllContent.setColumns(20);
+        txtAreaAllContent.setRows(5);
+        jScrollPane3.setViewportView(txtAreaAllContent);
+
+        lblTime.setText("jLabel1");
+
+        lblNickName.setBackground(new java.awt.Color(51, 255, 255));
+        lblNickName.setText("Name :");
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Chat Room");
+
+        txtSendContent.setBackground(new java.awt.Color(153, 255, 153));
+        txtSendContent.setToolTipText("nhập nội dung muốn gửi");
+        txtSendContent.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jScrollPane4.setViewportView(txtSendContent);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable2);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSend))
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 307, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblTime, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(lblNickName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 128, Short.MAX_VALUE)))
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnSend)
+                    .addComponent(btnExit))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    
+    
+    // set label nick name
+    public void setContentLblNickName(String name){
+        this.lblNickName.setText("Nick name : " + name);
+        this.nickname = name;
+    }
+    //set nội dụng txtArea
+    public void setContentTxtAreaAllContent(String name){
+        txtAreaAllContent.append(name + "\n");
+    }
+    // event btnSend
+    public void addbtnSendActionListener(ActionListener ac){
+        btnSend.addActionListener(ac);
+        
+    }
+    public void addTxtSendContentKeyListener(KeyListener ac){
+        txtSendContent.addKeyListener(ac);
+    }
+    // event btnExit
+    public void addBtnExitActionListener(ActionListener ac){
+        btnExit.addActionListener(ac);
+    }
+   // đóng gói Object MessageContent
+    public MessageContent getMessageContent(){
+        String nickName =this.nickname;
+        String message = txtSendContent.getText();
+        
+        MessageContent content = new MessageContent(nickName,message);
+        
+        return content;
+    }
+    
+    public void setLblTime(Date date ){
+        String time =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        lblTime.setText(time);
+    }
+// trả về Object txtArea
+    public JTextArea getTxtAreaAllContent() {
+        return txtAreaAllContent;
+    }
+
+    public JTextField getTxtSendContent() {
+        return txtSendContent;
+    }
+
+    public JLabel getLblNickName() {
+        return lblNickName;
+    }
+
+    public JLabel getLblTime() {
+        return lblTime;
+    }
+    
+
+    
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnSend;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JLabel lblNickName;
+    private javax.swing.JLabel lblTemp;
+    private javax.swing.JLabel lblTime;
+    private javax.swing.JTextArea txtAreaAllContent;
+    private javax.swing.JTextField txtSendContent;
+    // End of variables declaration//GEN-END:variables
+}
